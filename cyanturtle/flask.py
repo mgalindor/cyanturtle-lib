@@ -1,9 +1,27 @@
+from dataclasses import dataclass
 from functools import wraps
+from typing import List
 
 from flask import request
 from flask_jwt_extended import verify_jwt_in_request, get_jwt_claims, get_jwt_identity
 from marshmallow import ValidationError
 from werkzeug.exceptions import Forbidden, BadRequest
+
+from cyanturtle.persistence import Entity
+
+
+@dataclass
+class Principal(Entity):
+    user_name: str
+    name: str
+    space: str
+    year: str
+    authorities: List[str]
+
+
+def get_principal() -> Principal:
+    return Principal(user_name=get_jwt_identity(), name=get_jwt_claims()['name'], space=get_jwt_claims()['space'],
+                     year=get_jwt_claims()['year'], authorities=get_jwt_claims()['authorities'])
 
 
 def get_current_user():
