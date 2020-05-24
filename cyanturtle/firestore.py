@@ -13,7 +13,7 @@ class Repository(BaseRepository, ABC):
         self.__db = firestore.Client()
         self.collection = collection
 
-    def create(self, **kwargs) -> str:
+    def create(self, id=None, **kwargs) -> str:
         """ Method to create a document in GCP Firestore
 
         Args:
@@ -25,9 +25,10 @@ class Repository(BaseRepository, ABC):
         Returns:
             (string): Id of the new object
         """
-        oid = str(ObjectId())
-        self._collection_reference().document(oid).set(kwargs)
-        return oid
+        if not id:
+            id = str(ObjectId())
+        self._collection_reference().document(id).set(kwargs)
+        return id
 
     def find_by_id(self, id, **kwargs) -> dict:
         """ Method to find a document by id in GCP Firestore

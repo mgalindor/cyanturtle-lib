@@ -20,7 +20,7 @@ class Entity(ABC):
 class Repository(ABC):
 
     @abstractmethod
-    def create(self, **kwargs) -> str:
+    def create(self, id, **kwargs) -> str:
         """Overrides to create a record"""
         raise NotImplementedError("Not implemented create")
 
