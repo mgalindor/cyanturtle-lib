@@ -21,7 +21,7 @@ class Principal(Entity):
 
 def get_principal() -> Principal:
     return Principal(user_name=get_jwt_identity(), name=get_jwt_claims()['name'], space=get_jwt_claims()['space'],
-                     year=get_jwt_claims()['year'], authorities=get_jwt_claims()['authorities'])
+                     year=get_jwt_claims().get('year',None), authorities=get_jwt_claims()['authorities'])
 
 
 def get_current_user():
