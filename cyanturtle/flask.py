@@ -14,21 +14,20 @@ from cyanturtle.persistence import Entity
 class Principal(Entity):
     user_name: str
     name: str
-    space: str
     year: str
     authorities: List[str]
 
 
 def get_principal() -> Principal:
-    return Principal(user_name=get_jwt_identity(), name=get_jwt_claims()['name'], space=get_jwt_claims()['space'],
-                     year=get_jwt_claims().get('year',None), authorities=get_jwt_claims()['authorities'])
+    return Principal(user_name=get_jwt_identity(), name=get_jwt_claims().get('name', None),
+                     year=get_jwt_claims().get('year', None),
+                     authorities=get_jwt_claims().get('authorities', None))
 
 
 def get_current_user():
     return {'user_name': get_jwt_identity(),
-            'authorities': get_jwt_claims()['authorities'],
-            'space': get_jwt_claims()['space'],
-            'name': get_jwt_claims()['name']
+            'authorities': get_jwt_claims().get('authorities', None),
+            'name': get_jwt_claims().get('name', None)
             }
 
 
@@ -37,7 +36,7 @@ def require_authority(authority):
         @wraps(func)
         def wrapper_require_authority(*args, **kwargs):
             verify_jwt_in_request()
-            authorities = get_jwt_claims()['authorities']
+            authorities = get_jwt_claims().get('authorities', [])
             to_check = [authority] if type(authority) is not list else authority
             if set(to_check).intersection(authorities):
                 return func(*args, **kwargs)
