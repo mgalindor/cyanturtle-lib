@@ -45,7 +45,7 @@ class Repository(BaseRepository, ABC):
         documentReference = self._collection_reference().document(id)
         documentSnapshot = documentReference.get()
         if not documentSnapshot.exists:
-            raise NotFound()
+            raise NotFound(description=('Resource [%s] not found' % id))
         return documentSnapshot.to_dict()
 
     def update(self, id, **kwargs):
