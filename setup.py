@@ -8,4 +8,5 @@ setup(name='cyanturtle-lib',
       author_email='mgldrz@gmail.com',
       license='MIT',
       packages=['cyanturtle'],
+      setup_requires=['wheel'],
       zip_safe=False)
