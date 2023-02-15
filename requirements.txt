@@ -6,4 +6,4 @@ flask_jwt_extended==3.24.1
 google-cloud-firestore==1.7.0
 injector==0.18.3
 marshmallow==3.6.0
-werkzeug==0.16.1
+werkzeug==2.2.3
